@@ -14,7 +14,7 @@ calculate_df_folds(df, train, test)
 \item{test}{Number of test weeks.}
 }
 \value{
-Test.
+A list of data frames representing the individual folds with training and test weeks.
 }
 \description{
 A detailed description of what the function does.

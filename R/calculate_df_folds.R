@@ -28,8 +28,8 @@ calculate_df_folds <- function(df, train, test) {
     fold_df <- df[start:end, ]
 
     # Add an indicator column
-    fold_df$indicator <- c(rep("test", min(test, nrow(fold_df))),
-                           rep("train", max(0, nrow(fold_df) - test)))
+    fold_df$indicate_train_test <- c(rep("train", max(0, nrow(fold_df) - test)),
+                                     rep("test", min(test, nrow(fold_df))))
 
     folds[[length(folds) + 1]] <- fold_df
 
