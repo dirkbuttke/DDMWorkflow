@@ -5,11 +5,13 @@
 #' @param df The data frame to be used to split into folds.
 #' @param train Number of training weeks.
 #' @param test Number of test weeks.
-#' @return Test.
+#' @return A list of data frames representing the individual folds with training and test weeks.
 #' @export
 #' @examples
 #' # Examples of how to use the function:
-#' result <- your_function_name(sample_param1, sample_param2)
+#' data <- data.frame(week = 1:10, sales = runif(10, 100, 1000))
+#' result <- calculate_df_folds(data, 2, 2)
+#' result
 
 calculate_df_folds <- function(df, train, test) {
   folds <- list()
@@ -22,7 +24,13 @@ calculate_df_folds <- function(df, train, test) {
   while (start > 0) {
     end <- start + fold_size - 1
     if (end > n) end <- n
-    folds[[length(folds) + 1]] <- df[start:end, ]
+    fold_df <- df[start:end, ]
+
+    # Add an indicator column
+    fold_df$Indicator <- c(rep("test", min(test, nrow(fold_df))),
+                           rep("train", max(0, nrow(fold_df) - test)))
+
+    folds[[length(folds) + 1]] <- fold_df
 
     start <- start - test  # Move to the next fold by the size of the test set
     if (start < 1 && length(folds) > 0) break
