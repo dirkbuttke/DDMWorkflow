@@ -14,6 +14,7 @@
 #' result
 
 calculate_df_folds <- function(df, train, test) {
+  df <- data.frame(df)
   folds <- list()
   n <- nrow(df)
   fold_size <- train + test  # Total size of each fold
@@ -27,7 +28,7 @@ calculate_df_folds <- function(df, train, test) {
     fold_df <- df[start:end, ]
 
     # Add an indicator column
-    fold_df$Indicator <- c(rep("test", min(test, nrow(fold_df))),
+    fold_df$indicator <- c(rep("test", min(test, nrow(fold_df))),
                            rep("train", max(0, nrow(fold_df) - test)))
 
     folds[[length(folds) + 1]] <- fold_df
